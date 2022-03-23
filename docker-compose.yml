@@ -1,115 +1,106 @@
-version: "3.4"
+version: '3.4'
 services:
   deluge:
     container_name: deluge
-    image: linuxserver/deluge:latest
+    image: 'linuxserver/deluge:latest'
     restart: unless-stopped
     network_mode: host
     environment:
-      - PUID=${PUID} # default user id, defined in .env
-      - PGID=${PGID} # default group id, defined in .env
-      - TZ=${TZ} # timezone, defined in .env
+      - 'PUID=${PUID}'
+      - 'PGID=${PGID}'
+      - 'TZ=${TZ}'
     volumes:
-      - ${ROOT}/hdd2/auto_media/downloads:/downloads # downloads folder
-      - ${ROOT}/config/deluge:/config # config files
-
+      - '${ROOT}/hdd2/auto_media/downloads:/downloads'
+      - '${ROOT}/config/deluge:/config'
   jackett:
     container_name: jackett
-    image: linuxserver/jackett:latest
+    image: 'linuxserver/jackett:latest'
     restart: unless-stopped
     network_mode: host
     environment:
-      - PUID=${PUID} # default user id, defined in .env
-      - PGID=${PGID} # default group id, defined in .env
-      - TZ=${TZ} # timezone, defined in .env
+      - 'PUID=${PUID}'
+      - 'PGID=${PGID}'
+      - 'TZ=${TZ}'
     volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - ${ROOT}/downloads/torrent-blackhole:/downloads # place where to put .torrent files for manual download
-      - ${ROOT}/config/jackett:/config # config files
-      
+      - '/etc/localtime:/etc/localtime:ro'
+      - '${ROOT}/downloads/torrent-blackhole:/downloads'
+      - '${ROOT}/config/jackett:/config'
   sonarr:
     container_name: sonarr
-    image: linuxserver/sonarr:latest
+    image: 'linuxserver/sonarr:latest'
     restart: unless-stopped
     network_mode: host
     environment:
-      - PUID=${PUID} # default user id, defined in .env
-      - PGID=${PGID} # default group id, defined in .env
-      - TZ=${TZ} # timezone, defined in .env
+      - 'PUID=${PUID}'
+      - 'PGID=${PGID}'
+      - 'TZ=${TZ}'
     volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - ${ROOT}/config/sonarr:/config # config files
-      - ${ROOT}/hdd1/TV_Shows:/tv # tv shows folder
-      - ${ROOT}/hdd2/auto_media/downloads:/downloads # download folder
-
+      - '/etc/localtime:/etc/localtime:ro'
+      - '${ROOT}/config/sonarr:/config'
+      - '${ROOT}/hdd1/TV_Shows:/tv'
+      - '${ROOT}/hdd2/auto_media/downloads:/downloads'
   radarr:
     container_name: radarr
-    image: linuxserver/radarr:latest
+    image: 'linuxserver/radarr:latest'
     restart: unless-stopped
     network_mode: host
     environment:
-      - PUID=${PUID} # default user id, defined in .env
-      - PGID=${PGID} # default group id, defined in .env
-      - TZ=${TZ} # timezone, defined in .env
+      - 'PUID=${PUID}'
+      - 'PGID=${PGID}'
+      - 'TZ=${TZ}'
     volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - ${ROOT}/config/radarr:/config # config files
-      - ${ROOT}/hdd1/Movies:/movies # movies folder
-      - ${ROOT}/hdd2/auto_media/downloads:/downloads # download folder
-
+      - '/etc/localtime:/etc/localtime:ro'
+      - '${ROOT}/config/radarr:/config'
+      - '${ROOT}/hdd1/Movies:/movies'
+      - '${ROOT}/hdd2/auto_media/downloads:/downloads'
   plex-server:
     container_name: plex-server
-    image: plexinc/pms-docker:latest
+    image: 'plexinc/pms-docker:latest'
     restart: unless-stopped
     environment:
-      - TZ=${TZ} # timezone, defined in .env
+      - 'TZ=${TZ}'
     network_mode: host
     volumes:
-      - ${ROOT}/config/plex/db:/config # plex database
-      - ${ROOT}/config/plex/transcode:/transcode # temp transcoded files
-      - ${ROOT}/hdd1:/data # media library
-
+      - '${ROOT}/config/plex/db:/config'
+      - '${ROOT}/config/plex/transcode:/transcode'
+      - '${ROOT}/hdd1:/data'
   bazarr:
     container_name: bazarr
     image: linuxserver/bazarr
     restart: unless-stopped
     network_mode: host
     environment:
-      - PUID=${PUID} # default user id, defined in .env
-      - PGID=${PGID} # default group id, defined in .env
-      - TZ=${TZ} # timezone, defined in .env
-      - UMASK_SET=022 #optional
+      - 'PUID=${PUID}'
+      - 'PGID=${PGID}'
+      - 'TZ=${TZ}'
+      - UMASK_SET=022
     volumes:
-      - ${ROOT}/config/bazarr:/config # config files
-      - ${ROOT}/hdd1/Movies:/movies # movies folder
-      - ${ROOT}/hdd1/TV_Shows:/tv # tv shows folder
-
+      - '${ROOT}/config/bazarr:/config'
+      - '${ROOT}/hdd1/Movies:/movies'
+      - '${ROOT}/hdd1/TV_Shows:/tv'
   pyload:
     image: lscr.io/linuxserver/pyload-ng
     container_name: pyload-ng
     environment:
       - PUID=$(PUID)
       - PGID=$(PGID)
-      - TZ=${TZ}
+      - 'TZ=${TZ}'
     volumes:
-      - /path/to/pyload/config:/config
-      - /path/to/downloads:/downloads
+      - '/path/to/pyload/config:/config'
+      - '/path/to/downloads:/downloads'
     ports:
-      - 8000:8000
+      - '8000:8000'
     restart: unless-stopped
-    
-   heimdall:
+  heimdall:
     image: lscr.io/linuxserver/heimdall
     container_name: heimdall
     environment:
       - PUID=$(PUID)
       - PGID=$(PGID)
-      - TZ=${TZ}
+      - 'TZ=${TZ}'
     volumes:
-      -  ${ROOT}/config/bazarr:/config # config files
+      - '${ROOT}/config/bazarr:/config'
     ports:
-      - 80:80
-      - 443:443
+      - '80:80'
+      - '443:443'
     restart: unless-stopped
-    
-   
