@@ -82,8 +82,8 @@ services:
     image: lscr.io/linuxserver/pyload-ng
     container_name: pyload-ng
     environment:
-      - PUID=$(PUID)
-      - PGID=$(PGID)
+      - 'PUID=$(PUID)'
+      - 'PGID=$(PGID)'
       - 'TZ=${TZ}'
     volumes:
       - '/path/to/pyload/config:/config'
@@ -95,8 +95,8 @@ services:
     image: lscr.io/linuxserver/heimdall
     container_name: heimdall
     environment:
-      - PUID=$(PUID)
-      - PGID=$(PGID)
+      - 'PUID=$(PUID)'
+      - 'PGID=$(PGID)'
       - 'TZ=${TZ}'
     volumes:
       - '${ROOT}/config/bazarr:/config'
